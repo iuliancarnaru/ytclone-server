@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
@@ -22,6 +24,8 @@ function connectToDb() {
 }
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(helmet());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
