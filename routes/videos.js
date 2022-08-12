@@ -33,4 +33,8 @@ router.get("/random", randomVideos);
 
 router.get("/subscribed", verifyToken, subscribedVideos);
 
+// router.get("/tags", verifyToken);
+
+// router.get("/search", verifyToken);
+
 export default router;

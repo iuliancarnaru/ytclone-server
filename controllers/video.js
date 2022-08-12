@@ -108,7 +108,8 @@ export const subscribedVideos = async (req, res, next) => {
       })
     );
 
-    res.status(200).json(list);
+    // returns an array of arrays -> we need to flat it and sort it based of createdAt
+    res.status(200).json(list.flat().sort((a, b) => b.createdAt - a.createdAt));
   } catch (error) {
     next(error);
   }
