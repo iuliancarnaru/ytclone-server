@@ -114,3 +114,27 @@ export const subscribedVideos = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getByTags = async (req, res, next) => {
+  try {
+    const tags = req.query.tags.split(",");
+    const videos = await Video.find({
+      tags: {
+        $in: tags,
+      },
+    }).limit(20);
+    res.status(200).json(videos);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const search = async (req, res, next) => {
+  try {
+    // bring the videos with the most views
+    const trendVideos = await Video.find().sort({ views: -1 });
+    res.status(200).json(trendVideos);
+  } catch (error) {
+    next(error);
+  }
+};
