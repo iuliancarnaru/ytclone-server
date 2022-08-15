@@ -131,9 +131,15 @@ export const getByTags = async (req, res, next) => {
 
 export const search = async (req, res, next) => {
   try {
-    // bring the videos with the most views
-    const trendVideos = await Video.find().sort({ views: -1 });
-    res.status(200).json(trendVideos);
+    const query = req.query.q;
+    // search based on query with the option case insensitive
+    const videos = await Video.find({
+      title: {
+        $regex: query,
+        $options: "i",
+      },
+    }).limit(40);
+    res.status(200).json(videos);
   } catch (error) {
     next(error);
   }
