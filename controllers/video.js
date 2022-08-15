@@ -68,7 +68,7 @@ export const getVideo = async (req, res, next) => {
 
 export const addViews = async (req, res, next) => {
   try {
-    const video = await Video.findByIdAndUpdate(req.params.id, {
+    await Video.findByIdAndUpdate(req.params.id, {
       $inc: { views: 1 },
     });
     res.status(200).json("Views have been increased");
@@ -116,8 +116,9 @@ export const subscribedVideos = async (req, res, next) => {
 };
 
 export const getByTags = async (req, res, next) => {
+  const tags = req.query.tags.split(",");
+
   try {
-    const tags = req.query.tags.split(",");
     const videos = await Video.find({
       tags: {
         $in: tags,
@@ -130,8 +131,9 @@ export const getByTags = async (req, res, next) => {
 };
 
 export const search = async (req, res, next) => {
+  const query = req.query.q;
+
   try {
-    const query = req.query.q;
     // search based on query with the option case insensitive
     const videos = await Video.find({
       title: {
