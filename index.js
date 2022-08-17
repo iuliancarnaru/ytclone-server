@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
+import cors from "cors";
 
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
@@ -26,6 +27,7 @@ function connectToDb() {
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
+app.use(cors());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -45,5 +47,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   connectToDb();
-  console.log(`App running -->  http://localhost:${PORT} 🔥`);
+  console.log(`CORS-enabled web server -->  http://localhost:${PORT} 🔥`);
 });
